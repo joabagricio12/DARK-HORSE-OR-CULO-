@@ -1,5 +1,7 @@
 {
-  "name": "Copy of DARK HORSE 1.1",
-  "description": "An evolutionary analysis and intelligent statistical generation application for predicting numerical sequences. 'Where hidden patterns take flight.'",
-  "requestFramePermissions": []
+  "name": "DARK HORSE — PROMPT TÉCNICO DEFINITIVO",
+  "description": "Onde padrões ocultos ganham asas. Inteligência Preditiva Universal.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }
