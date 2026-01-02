@@ -8,6 +8,7 @@ import CandidateDisplay from './CandidateDisplay';
 import AdvancedPredictionDisplay from './AdvancedPredictionDisplay';
 import StatisticsDisplay from './StatisticsDisplay';
 import HistoryModal from './HistoryModal';
+import ChatModule from './ChatModule';
 import Loader from './Loader';
 import { runGenerationCycle, parseModules } from './analysisService';
 import { INITIAL_HISTORY } from './initialData';
@@ -29,6 +30,7 @@ const App: React.FC = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+    const [isChatOpen, setIsChatOpen] = useState(false);
     const [isLocked, setIsLocked] = useState(false);
 
     useEffect(() => {
@@ -46,7 +48,7 @@ const App: React.FC = () => {
         const msg = new SpeechSynthesisUtterance(text);
         msg.lang = 'pt-BR';
         msg.rate = 0.85;
-        msg.pitch = 0.7; // Voz mais profunda e autoritária
+        msg.pitch = 0.7;
         window.speechSynthesis.speak(msg);
     };
 
@@ -65,7 +67,7 @@ const App: React.FC = () => {
             setIsLoading(false);
             setIsLocked(true); 
             speak("Manifestação concluída. O Oráculo isolou o padrão de ressonância.");
-        }, 4500); // Thinking budget visual estendido para "Deep Thinking"
+        }, 4500);
     };
 
     const handlePasteM3 = (v: string[]) => {
@@ -78,7 +80,11 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-[#010409] px-3 pt-2 pb-12 gap-3 text-slate-100 flex flex-col overflow-y-auto no-scrollbar selection:bg-amber-500/30 font-orbitron hologram-noise relative">
-            <Header onOpenHistory={() => setIsHistoryOpen(true)} isLoading={isLoading} />
+            <Header 
+                onOpenHistory={() => setIsHistoryOpen(true)} 
+                onOpenChat={() => setIsChatOpen(true)}
+                isLoading={isLoading} 
+            />
             
             <div className="bg-slate-900/40 p-5 rounded-[2.5rem] border border-amber-500/10 shadow-[inset_0_0_20px_rgba(245,158,11,0.05)] backdrop-blur-3xl oracle-glow relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 blur-3xl -mr-16 -mt-16"></div>
@@ -118,6 +124,13 @@ const App: React.FC = () => {
             )}
 
             <HistoryModal isOpen={isHistoryOpen} onClose={() => setIsHistoryOpen(false)} inputHistory={inputHistory} onClearInputHistory={() => setInputHistory([])} onDeleteInputItem={(i) => setInputHistory(prev => prev.filter((_, idx) => idx !== i))} generatedHistory={[]} onClearGeneratedHistory={() => {}} onDeleteGeneratedItem={() => {}} hitsHistory={hitsHistory} onClearHitsHistory={() => setHitsHistory([])} onDeleteHitItem={(i) => setHitsHistory(prev => prev.filter((_, idx) => idx !== i))} rectificationHistory={rectificationHistory} onClearRectificationHistory={() => setRectificationHistory([])} onDeleteRectificationItem={(i) => setRectificationHistory(prev => prev.filter((_, idx) => idx !== i))} />
+            
+            <ChatModule 
+              isOpen={isChatOpen} 
+              onClose={() => setIsChatOpen(false)} 
+              voiceEnabled={settings.voiceEnabled}
+              onSpeak={speak}
+            />
         </div>
     );
 };

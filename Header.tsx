@@ -4,10 +4,11 @@ import PegasusIcon from './PegasusIcon';
 
 interface HeaderProps {
     onOpenHistory: () => void;
+    onOpenChat: () => void;
     isLoading?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ onOpenHistory, isLoading }) => {
+const Header: React.FC<HeaderProps> = ({ onOpenHistory, onOpenChat, isLoading }) => {
     return (
         <header className="flex items-center justify-between px-6 py-5 flex-none bg-slate-900/20 border-b border-amber-900/10 rounded-b-[3rem] mb-2 backdrop-blur-xl relative overflow-hidden">
             {isLoading && (
@@ -29,14 +30,30 @@ const Header: React.FC<HeaderProps> = ({ onOpenHistory, isLoading }) => {
                 </div>
             </div>
 
-            <button 
-                onClick={onOpenHistory} 
-                className="p-4 border border-slate-800 bg-slate-900/50 rounded-[1.5rem] text-amber-500 hover:text-white transition-all active:scale-90 shadow-lg group relative overflow-hidden"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="12" r="3"/>
-                </svg>
-            </button>
+            <div className="flex items-center gap-2">
+              <button 
+                  onClick={onOpenChat} 
+                  className="p-4 border border-amber-500/20 bg-amber-500/5 rounded-[1.5rem] text-amber-500 hover:bg-amber-500/10 transition-all active:scale-90 shadow-lg group relative overflow-hidden"
+                  title="Link Neural"
+              >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12L2.1 12"/><path d="M12 12l9.9 0"/><path d="M12 12l0 10"/>
+                      <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
+              </button>
+
+              <button 
+                  onClick={onOpenHistory} 
+                  className="p-4 border border-slate-800 bg-slate-900/50 rounded-[1.5rem] text-slate-400 hover:text-white transition-all active:scale-90 shadow-lg group"
+                  title="Cofre de Dados"
+              >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+              </button>
+            </div>
+
             <style>{`
                 @keyframes shimmer {
                     0% { width: 0%; left: 0; }
